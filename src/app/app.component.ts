@@ -9,7 +9,8 @@ import { Visas } from './app.visas';
 })
 export class AppComponent {
   title = 'airie';
-  // use this variable to determine where we are in the workflow
+  public iCount:number=0;
+  // use this variable to determine where we are in the workflow.
   public uiStage:number=1;
 
   ngOnInit() {
