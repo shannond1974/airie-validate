@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-4" *ngFor="let visa of selectVisa" style="max-width: 30%; ">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{visa.visa}}</h5>
+            <p class="card-text">{{visa.visaDescription}}.</p>
+            <div class="col-10" style="text-align:center"><button class="btn btn-sm btn-info"  style="align-content:flex-end">Select</button></div>
+      
+          </div>
+        </div>
+      </div>
+</div>

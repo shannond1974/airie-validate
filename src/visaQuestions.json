@@ -1,0 +1,45 @@
+[
+    {
+      "Question": "Your country of passport",
+      "Type": "dropdown",
+      "PopulateFrom": "countries",
+      "ChildQuestion": {}
+    },
+    {
+      "Question": "Your country of residence",
+      "Type": "dropdown",
+      "PopulateFrom": "countries",
+      "ChildQuestion": {}
+    },
+    {
+      "Question": "Your age when you will apply",
+      "Type": "number",
+      "PopulateFrom": "15",
+      "ChildQuestion": {}
+    },
+    {
+      "Question": "I have been to New Zealand before",
+      "Type": "yesno",
+      "PopulateFrom": "",
+      "ChildQuestion": {
+        "Question": "What were the total number of months spent in New Zealand?",
+        "Type": "dropdown",
+        "PopulateFrom": "monthperiods",
+        "ChildQuestion": {}
+      }
+    },
+    {
+      "Question": "Total number of months you intend to stay in New Zealand on your visa",
+      "Type": "dropdown",
+      "PopulateFrom": "monthperiods",
+      "ChildQuestion": {}
+    },
+    {
+      "Question": "Countries you have lived in for more than 12 months since you turned 17",
+      "Type": "list",
+      "PopulateFrom": "countries",
+      "ChildQuestion": {}
+    }
+  ]
+  
+  

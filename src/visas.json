@@ -1,0 +1,23 @@
+[
+    {
+      "visa": "Visitor Visa",
+      "visaDescription": "This is a general purpose visitor visa"
+    },
+    {
+      "visa": "Student Visa",
+      "visaDescription": "This is a visa if you wish to stay for study purposes"
+    },
+    {
+      "visa": "Employer Accredited Work Visa",
+      "visaDescription": "This is a visa from an accredited employer"
+    },
+    {
+      "visa": "Resident Visa (Skilled)",
+      "visaDescription": "This is a resident visa based on skilled professions"
+    },
+    {
+      "visa": "Resident Visa (Family)",
+      "visaDescription": "This is a resident visa based on family needs"
+    }
+  ]
+  
