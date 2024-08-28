@@ -1,10 +1,10 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import countries from '../countries.json';
-import visaQuestions from '../visaQuestions.json';
-import monthPeriods from '../monthPeriods.json';
-import visas from '../visas.json';
+import countries from '../../countries.json';
+import visaQuestions from '../../visaQuestions.json';
+import monthPeriods from '../../monthPeriods.json';
+import visas from '../../visas.json';
 
 @Component({
   selector: 'app-visa-questions',

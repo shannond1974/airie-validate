@@ -5,22 +5,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
-import { Landing } from './app.landing';
-import { Visas } from './app.visas';
-import { VisaQuestions } from './app.visaQuestions';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Landing } from './UIComponents/app.landing';
+import { Visas } from './UIComponents/app.visas';
+import {Navbar} from './UIComponents/app.navbar';
+import { VisaQuestions } from './UIComponents/app.visaQuestions';
+import {Header} from './UIComponents/app.header';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     Landing,
     Visas,
-    VisaQuestions
+    VisaQuestions,
+    Navbar,
+    Header
   ],
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule,CommonModule,
-    NgbModule,FormsModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

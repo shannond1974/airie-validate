@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Landing } from './app.landing';
-import { Visas } from './app.visas';
+import { Landing } from './UIComponents/app.landing';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,9 +9,10 @@ import { Visas } from './app.visas';
 })
 export class AppComponent {
   title = 'airie';
+  public proceedButtonText:string="Pick a Visa Type!";
   public iCount:number=0;
   // use this variable to determine where we are in the workflow.
-  public uiStage:number=1;
+  public uiStage:number=0;
 
   ngOnInit() {
   
@@ -25,6 +26,10 @@ export class AppComponent {
       // or go back to the previous stage
       this.uiStage--;
     }
-
+    if(this.uiStage<2){
+      this.proceedButtonText="Pick a Visa Type!";
+    }else{
+      this.proceedButtonText="Get My Report!";
+    }
   }
 }

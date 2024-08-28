@@ -1,14 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Airie Assistance</a>
-
-      <div  class="d-flex" >
-        <a class="nav-link active" href="#">About</a>
-      </div>
-    
-  </div>
-</nav>
-<div class="container-fluid">
+<app-navbar></app-navbar>
+<div class="row" style="min-height: 50px;"></div>
+<div [hidden]="uiStage>0">
+  <app-header></app-header>
+</div>
+<div [hidden]="uiStage==0">
   <div [hidden]="uiStage!=1">
   <app-landing></app-landing>
   </div>
@@ -19,20 +14,25 @@
     <app-visa-questions></app-visa-questions>
   </div>  
   <div class="row">
-    <div class="col-4"></div>
-    <div class="col-2">
-      <div [hidden]="uiStage<2"><button class="btn" (click)="moveStage(false)">Go Back</button></div>
+    <div class="col-2"></div>
+    <div class="col-4">
+      <div [hidden]="uiStage<2"><button class="btn btn-info btn-xl" (click)="moveStage(false)">Go Back</button></div>
     </div>
-    <div class="col-2">
-      <div [hidden]="uiStage>2"><button  class="btn btn-primary" (click)="moveStage(true)">Select Visa</button></div>
+    <div class="col-4">
+      <div [hidden]="uiStage>2"><button  class="btn btn-primary btn-xl" (click)="moveStage(true)">{{proceedButtonText}}</button></div>
       <div [hidden]="uiStage<3">
         <input class="form-control" placeholder="Enter email" />
-        <button  class="btn btn-primary" (click)="moveStage(true)">Send Custom Report</button>
+        <button  class="btn btn-primary">Request My Custom Report</button>
       </div>
       
     </div>
-    <div class="col-4"></div>
+    <div class="col-2"></div>
   </div>
   
+</div>
+<div [hidden]="uiStage>0">
+  <div class="row justify-content-center" style="padding-top:50px">
+    <button class="btn btn-primary btn-xl" style="max-width: 400px" (click)="moveStage(true)">Yes I'm Interested!</button>
+  </div>
 </div>
 <router-outlet />
