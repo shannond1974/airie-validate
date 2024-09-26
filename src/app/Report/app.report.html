@@ -1,0 +1,47 @@
+<section class="page-section portfolio" id="portfolio">
+    <div class="container" [hidden]="uiStage>0">
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <p class="masthead-subheading font-weight-light mb-0">Airie Immigration Report Generator</p>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <p  [innerHtml]="reportParts0 | safeHtml"></p>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <p  [innerHtml]="reportParts1 | safeHtml"></p>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <h3>Important Note</h3>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <div class="row"  [innerHtml]="reportParts2 | safeHtml"> </div>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <h3>When to Seek Advice</h3>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <div class="row"  [innerHtml]="reportParts3 | safeHtml"> </div>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <p class="lead">01. What you have told us</p>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            Your custom report is based on the following information you have told us:
+        </div>
+        <div class="row justify-content-center" style="padding-bottom:10px">
+            <div class="row"  [innerHtml]="reportParts4 | safeHtml"> </div>
+        </div>
+    </div>
+    
+    
+        <div class="row justify-content-center" style="padding-top:50px" [hidden]="uiStage>0">
+          <div class="col-4"></div>
+          <div class="col-2"><button class="btn btn-info"  (click)="moveStage(true)">{{proceedButtonText}}</button></div>
+          <div class="col-2"><button class="btn btn-info"  (click)="emailLink()">Email link</button></div>
+          <div class="col-4"></div>
+          
+          
+        </div>
+      
+</section>    

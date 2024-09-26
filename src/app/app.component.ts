@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet,ActivatedRoute  } from '@angular/router';
 import { Landing } from './UIComponents/app.landing';
 
 @Component({
@@ -13,9 +13,31 @@ export class AppComponent {
   public iCount:number=0;
   // use this variable to determine where we are in the workflow.
   public uiStage:number=0;
+  public userName:string='';
+  public passWord:string='';
+  public invalidPassword:boolean=false;
+
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-  
+    this.userName=='airie';
+    const queryParams = this.route.snapshot.queryParams;
+    console.log(queryParams);
+  }
+
+  moveStageCustom(moveTo:number){
+    // progress the stage to the next step
+    this.uiStage=moveTo;
+    
+  }
+  login(){
+    if(this.passWord=='Airie2024!Migrate' && this.userName=='airie'){
+      this.invalidPassword=false;
+      this.uiStage=10;
+    }else{
+      this.invalidPassword=true;
+    }
+
   }
 
   moveStage(isUp:boolean){

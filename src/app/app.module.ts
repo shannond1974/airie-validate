@@ -10,6 +10,9 @@ import { Visas } from './UIComponents/app.visas';
 import {Navbar} from './UIComponents/app.navbar';
 import { VisaQuestions } from './UIComponents/app.visaQuestions';
 import {Header} from './UIComponents/app.header';
+import {StatementOfIntent} from './Letters/app.stateintent';
+import {Report} from './Report/app.report';
+import { SafeHtmlPipe } from './safeHTMLPipe';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -18,8 +21,11 @@ import {Header} from './UIComponents/app.header';
     Landing,
     Visas,
     VisaQuestions,
+    StatementOfIntent,
+    Report,
     Navbar,
-    Header
+    Header,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule, HttpClientModule,

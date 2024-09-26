@@ -1,0 +1,106 @@
+
+<section class="page-section portfolio" id="portfolio">
+    <div class="container" [hidden]="uiStage>0">
+        <div class="row justify-content-center" style="padding-bottom:10px">
+        <p class="masthead-subheading font-weight-light mb-0">Airie Immigration Letter Generator - Statement Of Intent</p>
+        </div>
+        <div class="row justify-content-center">
+            <p>Thanks for using the Airie letter generation service.  This service will provide an auto-generated letter to be sent
+                to Immigration New Zealand.  The pricing for the letter is NZ xxx for an auto-generated letter and NZ xxx for a letter
+                reviewed and approved by one of our in-house immigration experts.
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <p>This section requires you to answer a number of questions.  Note, these questions are optional but where they are not
+                provided the letter will be generated with placeholder content which will need to be subsquently added.
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <p>Legal disclaimer text in here
+            </p>
+        </div>
+    </div>
+    <div class="container" [hidden]="uiStage!=1">
+        <div class="row justify-content-center" style="padding-bottom:10px">
+        <p class="masthead-subheading font-weight-light mb-0">Airie Immigration Letter Generator - Statement Of Intent</p>
+        </div>
+        <div class="row justify-content-center">
+            <p>Let's start with some basic details.
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter your full name:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="FullName">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter the first line of your address:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="Address1">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter the second line of your address:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="Address2">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter your postal / zip code:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="PostCode">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter your email:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="Email">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter your phone number:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="PhoneNumber">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6" style="text-align:right;">
+                <p>Please enter your application reference:</p>
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="AppReference">
+            </div>
+        </div>
+        <div class="row justify-content-center" style="padding-bottom: 100px;"></div>
+        
+    </div>
+    <div class="row justify-content-center" style="padding-top:50px" [hidden]="uiStage<1">
+        {{letterPart1}}
+        <div class="col-5"></div>
+        <div class="col-1">
+            <button class="btn btn-info"  (click)="moveStage(false)">Back</button>
+        </div>
+        <div class="col-1">  
+            <button class="btn btn-primary"  (click)="moveStage(true)">Next</button>
+        </div>
+        <div class="col-5"></div>
+    </div>
+        <div class="row justify-content-center" style="padding-top:50px" [hidden]="uiStage>0">
+          
+          <button class="btn btn-primary btn-xl" style="max-width: 400px" (click)="moveStage(true)">{{proceedButtonText}}</button>
+        </div>
+      
+</section>    
