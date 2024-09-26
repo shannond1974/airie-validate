@@ -21,7 +21,10 @@ export class Report implements OnInit {
   public reportParts4: string='';
   public answers:AnswerList[]=[];
   public userName:string='';
-  public emailToSend:string='shannond1974@gmail.com';
+  public emailSent:string='';
+  public emailToSend:string='anniekieun@gmail.com';
+  public emailToSend2:string='garrik.perry@gmail.com';
+public merged:boolean=false;
 
   constructor(private http: HttpClient){
     this.answers=[];
@@ -89,10 +92,23 @@ export class Report implements OnInit {
       let emailRequest: any = { email:this.emailToSend, internal:false,AnswerSetId:'1',options };
       this.http.post<any>(this.baseURL + 'chatAI/EmailReport', emailRequest).subscribe(data => {
          console.log(data);
+         this.emailSent='Email sent ok';
         
     }) 
     }
 
+    emailLink2(){
+      const options = {
+        'responseType': 'text'
+      }
+    
+      let emailRequest: any = { email:this.emailToSend2, internal:false,AnswerSetId:'1',options };
+      this.http.post<any>(this.baseURL + 'chatAI/EmailReport', emailRequest).subscribe(data => {
+         console.log(data);
+         this.emailSent='Email sent ok';
+        
+    }) 
+    }
     moveStage(isUp:boolean){
       this.reportParts0=this.reportParts0.replace('[[CustomerName]]','Daniel\'s');
       this.reportParts1=this.reportParts1.replace('[[PreparedFor]]',this.userName);
@@ -106,6 +122,7 @@ export class Report implements OnInit {
           this.reportParts4=this.reportParts4.replace(this.answers[i].mergeField,this.answers[i].answerText);
         }
       }
+      this.merged=true;
     }
 
 

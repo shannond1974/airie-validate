@@ -36,10 +36,13 @@
     
     
         <div class="row justify-content-center" style="padding-top:50px" [hidden]="uiStage>0">
-          <div class="col-4"></div>
+          <div class="col-2"></div>
           <div class="col-2"><button class="btn btn-info"  (click)="moveStage(true)">{{proceedButtonText}}</button></div>
-          <div class="col-2"><button class="btn btn-info"  (click)="emailLink()">Email link</button></div>
-          <div class="col-4"></div>
+          <div class="col-6" [hidden]="!merged">
+            <button class="btn btn-info"  (click)="emailLink()">Email link to: {{emailToSend}}</button>
+            <button class="btn btn-info"  (click)="emailLink2()">Email link to: {{emailToSend2}}</button>
+        </div>
+          <div class="col-2">{{emailSent}}</div>
           
           
         </div>
