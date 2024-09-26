@@ -12,7 +12,8 @@ export class Report implements OnInit {
 
   public uiStage:number=0;
   public proceedButtonText:string="Apply Fields";
-  public baseURL="https://localhost:44381/";
+  //public baseURL="https://localhost:44381/";
+  public baseURL="https://airiesample555.azurewebsites.net/";
   public reportParts0: string='';
   public reportParts1: string='';
   public reportParts2: string='';
