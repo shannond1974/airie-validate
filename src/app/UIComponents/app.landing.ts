@@ -16,7 +16,7 @@ export class Landing implements OnInit {
     public userName='';
     public firstName='';
     public uniqueLink='';
-
+    public email='';
     ngOnInit() {
   
     }
@@ -28,12 +28,13 @@ export class Landing implements OnInit {
       
       this.currentAnswerId=answerSetId;
     }
-    gotoReport(answerSetId:number, userName:string,firstName:string, uniqueLink:string){
+    gotoReport(answerSetId:number, userName:string,firstName:string, uniqueLink:string, email:string){
       
       this.userName=userName;
       this.firstName=firstName;
       this.reportAnswerId=answerSetId;
       this.uniqueLink=uniqueLink;
+      this.email=email;
     }
     loadSubmissions(){
       this.apiService.getSubmittedAnswers().subscribe(data => {

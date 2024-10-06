@@ -15,6 +15,7 @@ export class Report implements OnInit {
   @Input() userName: string = '';
   @Input() firstName: string = '';
   @Input() uniqueLink: string='';
+  @Input() email:string='';
   public uiStage:number=0;
   public proceedButtonText:string="Apply Fields";
   public customerAge:number=0;
@@ -93,6 +94,7 @@ public merged:boolean=false;
     }
 
     emailLink(){
+      this.emailToSend=this.email;
       const options = {
         'responseType': 'text'
       }

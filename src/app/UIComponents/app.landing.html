@@ -12,7 +12,7 @@
         <div class="col-2">{{submission.userName}}</div>
         <div class="col-2">Processed : {{submission.processed}}</div>
         <div class="col-2"><button (click)="viewDetails(submission.answerSetId)" class="btn btn-small btn-info">View</button></div>
-        <div class="col-2"><button (click)="gotoReport(submission.answerSetId,submission.userName,submission.firstName,submission.uniqueLink)" class="btn btn-small btn-info">Report</button></div>
+        <div class="col-2"><button (click)="gotoReport(submission.answerSetId,submission.userName,submission.firstName,submission.uniqueLink,submission.email)" class="btn btn-small btn-info">Report</button></div>
       </div>
     </div>
     <div class="row" *ngFor="let detail of submissiondetails" >
@@ -30,5 +30,5 @@
 
 </section>
 <div *ngIf="reportAnswerId>0">
-  <app-report [answerSetId]="reportAnswerId" [userName]="userName" [firstName]="firstName" [uniqueLink]="uniqueLink"></app-report>
+  <app-report [answerSetId]="reportAnswerId" [userName]="userName" [firstName]="firstName" [uniqueLink]="uniqueLink" [email]="email"></app-report>
 </div>  
