@@ -1,21 +1,34 @@
-<section class="page-section portfolio" id="portfolio">
+<section class="page-section portfolio" id="portfolio" [hidden]="reportAnswerId>0">
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-3"><p class="lead"> Select the request to process:</p></div>
       
-      <div class="col-6">
-        <p class="lead"> Ever thought Immigration is so complex?</p>
-    
-        <p class="lead"> It sure is but only has a whole.  What you need to know does not have to be.
-            You only need to know your byte of the mega mountain of information.</p>
-          
-            <p class="lead"> Airie gathers and curates custom information packs on your situation and the
-            visa you want to apply for so you can navigate the system on your own with confidence.</p>
-      </div>
-      <div class="col-6">
-        <p>Placeholder Content</p>
-        <img class="img-fluid" style="max-width:350px" src="..\..\assets\FormShot.png"/>
     </div>
-    
+    <div class="row" style="padding-bottom:20px"></div>
+    <div class="row" *ngFor="let submission of submissions" style="padding-bottom:20px">
+      <div class="row" [hidden]="currentAnswerId!=0 && submission.answerSetId!=currentAnswerId">
+        <div class="col-2"></div>
+        <div class="col-2">{{submission.userName}}</div>
+        <div class="col-2">Processed : {{submission.processed}}</div>
+        <div class="col-2"><button (click)="viewDetails(submission.answerSetId)" class="btn btn-small btn-info">View</button></div>
+        <div class="col-2"><button (click)="gotoReport(submission.answerSetId,submission.userName,submission.firstName,submission.uniqueLink)" class="btn btn-small btn-info">Report</button></div>
+      </div>
+    </div>
+    <div class="row" *ngFor="let detail of submissiondetails" >
+        <div class="row" [hidden]="detail.answerSetId!=currentAnswerId" style="padding-bottom:10px">
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-3">{{detail.questionText}}</div>
+            <div class="col-3">{{detail.answerText}}</div>
+          </div>
+        </div>
+        
+    </div>
+
   </div>
-  </div>
+
 </section>
+<div *ngIf="reportAnswerId>0">
+  <app-report [answerSetId]="reportAnswerId" [userName]="userName" [firstName]="firstName" [uniqueLink]="uniqueLink"></app-report>
+</div>  

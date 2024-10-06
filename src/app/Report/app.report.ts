@@ -2,7 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../rest/api.service';
-import { ChangeDetectorRef, Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input,Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 
 @Component({
@@ -11,6 +11,10 @@ import { ChangeDetectorRef, Component, OnInit, Output, EventEmitter, ViewChild, 
 })
 export class Report implements OnInit {
 
+  @Input() answerSetId: number = 0;
+  @Input() userName: string = '';
+  @Input() firstName: string = '';
+  @Input() uniqueLink: string='';
   public uiStage:number=0;
   public proceedButtonText:string="Apply Fields";
   public customerAge:number=0;
@@ -27,9 +31,9 @@ export class Report implements OnInit {
   public infoContent:informationContent[]=[];
   public conditionalLogic:ConditionalLogic[]=[];
 
-  public userName:string='';
+  
   public emailSent:string='';
-  public emailToSend:string='anniekieun@gmail.com';
+  public emailToSend:string='shannond1974@gmail.com';
   public emailToSend2:string='garrik.perry@gmail.com';
 public merged:boolean=false;
 
@@ -38,7 +42,7 @@ public merged:boolean=false;
     
   }
     ngOnInit() {
-      
+        console.log(this.uniqueLink);
         const options = {
             'responseType': 'text'
           }
@@ -51,7 +55,6 @@ public merged:boolean=false;
               this.reportParts.push(data[i].sectionContent);
             }
             
-            console.log(this.reportParts);
           })
 
         // get conditonal logic
@@ -60,13 +63,12 @@ public merged:boolean=false;
             this.conditionalLogic.push(data[i]);
           }
           
-          console.log(this.conditionalLogic);
         })
           
         // get the answers
-        this.apiService.getReportAnswers(1).subscribe(data => {
+        this.apiService.getReportAnswers(this.answerSetId).subscribe(data => {
           for(let i=0;i<data.length;i++){
-            console.log(data[i]);
+            
             // special variables to check for
             if(data[i].question=='Enter your date of birth'){
               this.customerAge=this.calculateAge(new Date(data[i].answerText));
@@ -85,7 +87,7 @@ public merged:boolean=false;
           for(let i=0;i<data.length;i++){
             this.infoContent.push(data[i]);
           }
-          console.log(this.infoContent);
+          
         })
          
     }
@@ -95,9 +97,8 @@ public merged:boolean=false;
         'responseType': 'text'
       }
     
-      let emailRequest: any = { email:this.emailToSend, internal:false,AnswerSetId:'1',options };
+      let emailRequest: any = { email:this.emailToSend, internal:false,AnswerSetId:String(this.answerSetId),UniqueLink:this.uniqueLink,options };
       this.apiService.sendEmail(emailRequest).subscribe(data => {
-        console.log(data);
         this.emailSent='Email sent ok';
        }) 
   
@@ -108,9 +109,8 @@ public merged:boolean=false;
         'responseType': 'text'
       }
     
-      let emailRequest: any = { email:this.emailToSend2, internal:false,AnswerSetId:'1',options };
+      let emailRequest: any = { email:this.emailToSend2, internal:false,AnswerSetId:String(this.answerSetId),UniqueLink:this.uniqueLink,options };
       this.apiService.sendEmail(emailRequest).subscribe(data => {
-        console.log(data);
         this.emailSent='Email sent ok';
        }) 
   
@@ -121,10 +121,10 @@ public merged:boolean=false;
     moveStage(isUp:boolean){
       console.log(this.reportParts.length);
       for(let i=0;i<this.reportParts.length;i++){
-        this.reportParts[i]=this.reportParts[i].replace('[[CustomerName]]','Daniel\'s');
+        this.reportParts[i]=this.reportParts[i].replace('[[CustomerName]]',this.firstName);
         this.reportParts[i]=this.reportParts[i].replace('[[PreparedFor]]',this.userName);
         this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()));
-        this.reportParts[i]=this.reportParts[i].replace('[[Citizenship]]','New Zealand');
+        this.reportParts[i]=this.reportParts[i].replace('[[Citizenship]]',this.customerCitizenship);
         this.reportParts[i]=this.reportParts[i].replace('[[PreparedFor]]',this.userName);
         this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()));
         this.reportParts[i]=this.reportParts[i].replace('[[VisaType]]','Fee Paying Student Visa');

@@ -33,7 +33,7 @@ export class AppComponent {
   login(){
     if(this.passWord=='Airie2024!Migrate' && this.userName=='airie'){
       this.invalidPassword=false;
-      this.uiStage=10;
+      this.uiStage=11;
     }else{
       this.invalidPassword=true;
     }

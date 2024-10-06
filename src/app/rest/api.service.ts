@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  public baseURL="https://localhost:44381/";
-  //public baseURL="https://airiesample555.azurewebsites.net/";
+  //public baseURL="https://localhost:44381/";
+  public baseURL="https://airiesample555.azurewebsites.net/";
   
 
   constructor(private httpClient: HttpClient) { }
@@ -56,8 +56,16 @@ export class ApiService {
     const options = {
       'responseType': 'text'
     }
-    let emailRequest: any = { email:email.email, internal:email.internalEmail,AnswerSetId:email.AnswerSetId,options };
+    let emailRequest: any = { email:email.email, internal:email.internalEmail,AnswerSetId:email.AnswerSetId, UniqueLink:email.UniqueLink,options };
     return this.httpClient.post<any>(this.baseURL + 'Airie/EmailReport', emailRequest);
+  }
+
+  public getSubmittedAnswers(){
+    const options = {
+      'responseType': 'application/json'
+    }
+    let reportRequest: any = { options };
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetSubmittedAnswers', reportRequest);
   }
 
 }
@@ -65,4 +73,5 @@ interface Email{
   email:string;
   internalEmail:boolean;
   AnswerSetId:number;
+  UniqueLink:string;
 }
