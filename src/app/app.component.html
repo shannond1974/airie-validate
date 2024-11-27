@@ -1,18 +1,10 @@
 
 <div class="row" style="min-height: 50px;"></div>
-<div [hidden]="uiStage>-1 || uiStage<110">
-  <app-header></app-header>
-</div>
 <div [hidden]="uiStage==0">
   <div [hidden]="uiStage!=11">
   <app-landing></app-landing>
   </div>
-  <div [hidden]="uiStage!=2">
-    <app-visas></app-visas>
-  </div> 
-  <div [hidden]="uiStage!=3">
-    <app-visa-questions></app-visa-questions>
-  </div>  
+  
   
 </div>
 

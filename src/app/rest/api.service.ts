@@ -42,6 +42,16 @@ export class ApiService {
 
   }
 
+  public publishReport(answerId:number, reportContent:string){
+    const options = {
+      'responseType': 'text'
+    }
+    let answerRequest: any = { AnswerSetId:String(answerId),publishContent:reportContent ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/PublishReport', answerRequest);;
+
+  }
+
   public getInformationContent(reportId:number){
     const options = {
       'responseType': 'text'

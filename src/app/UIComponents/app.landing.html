@@ -1,20 +1,554 @@
-<section class="page-section portfolio" id="portfolio" [hidden]="reportAnswerId>0">
-  <div class="container">
-    <div class="row">
-      <div class="col-4"></div>
-      <div class="col-3"><p class="lead"> Select the request to process:</p></div>
-      
-    </div>
-    <div class="row" style="padding-bottom:20px"></div>
-    <div class="row" *ngFor="let submission of submissions" style="padding-bottom:20px">
-      <div class="row" [hidden]="currentAnswerId!=0 && submission.answerSetId!=currentAnswerId">
-        <div class="col-2"></div>
-        <div class="col-2">{{submission.userName}}</div>
-        <div class="col-2">Processed : {{submission.processed}}</div>
-        <div class="col-2"><button (click)="viewDetails(submission.answerSetId)" class="btn btn-small btn-info">View</button></div>
-        <div class="col-2"><button (click)="gotoReport(submission.answerSetId,submission.userName,submission.firstName,submission.uniqueLink,submission.email)" class="btn btn-small btn-info">Report</button></div>
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="navbar navbar-expand-lg navbar-bordered navbar-spacer-y-0 flex-lg-column">
+    <div class="navbar-dark w-100  py-2">
+      <div class="container">
+        <div class="navbar-nav-wrap">
+          <!-- Logo -->
+          <a class="navbar-brand" href="./index.html" aria-label="Front">
+            <img class="navbar-brand-logo" src="./assets/logo.png" alt="Logo">
+          </a>
+          <!-- End Logo -->
+
+          <!-- Content Start -->
+          <div class="navbar-nav-wrap-content-start">
+            <!-- Search Form -->
+            <div class="d-none d-lg-block">
+              <div class="dropdown ms-2">
+                <!-- Input Group -->
+                <div class="d-none d-lg-block">
+                 <p class="lead">Airie Administration</p>
+
+                   
+                  
+                </div>
+
+
+              </div>
+
+            </div>
+            <!-- End Search Form -->
+          </div>
+          <!-- End Content Start -->
+
+          <!-- Content End -->
+          <div class="navbar-nav-wrap-content-end">
+            <!-- Navbar -->
+            <ul class="navbar-nav">
+              <li class="nav-item d-none d-md-inline-block">
+                <a id="questionManagementMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle active" href="#" (click)="questionView()" [ngStyle]="{'color': !hideQuestions ? 'green' : 'blue'}"  role="button">Question Management</a>
+              </li>
+              <li class="nav-item d-none d-md-inline-block">
+                <a id="reportTemplateMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle active" href="#" (click)="reportTemplateView()" [ngStyle]="{'color': !hideReportTemplates ? 'green' : 'blue'}" role="button">Report Template Management</a>
+              </li>
+              <li class="nav-item d-none d-md-inline-block">
+                <a id="dashboardsMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle active" href="#" [ngStyle]="{'color': !hideDashboard ? 'green' : 'blue'}" (click)="dashboardView()" role="button">Report Submissions</a>
+              </li>
+
+            </ul>
+            <!-- End Navbar -->
+          </div>
+          <!-- End Content End -->
+        </div>
       </div>
     </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="main">
+    <!-- Content -->
+    <div class="content container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row align-items-center">
+          <div class="col-sm mb-2 mb-sm-0">
+            <h1 class="page-header-title">Dashboard</h1>
+          </div>
+          <!-- End Col -->
+
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- End Page Header -->
+
+  
+      <!-- Card -->
+      <div class="card mb-3 mb-lg-5" [hidden]="hideDashboard">
+        <!-- Header -->
+        <div class="card-header">
+          <div class="row justify-content-between align-items-center flex-grow-1">
+            <div class="col-md">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-header-title">Report Submissions</h4>
+              </div>
+            </div>
+            <!-- End Col -->
+
+            <div class="col-auto">
+              <!-- Filter -->
+              <div class="row align-items-sm-center">
+                <div class="col-sm-auto">
+                  <div class="row align-items-center gx-0">
+                    
+                  </div>
+                  <!-- End Row -->
+                </div>
+                <!-- End Col -->
+
+                <!-- End Col -->
+              </div>
+              <!-- End Filter -->
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+        </div>
+        <!-- End Header -->
+
+        <!-- Table -->
+        <div class="table-responsive datatable-custom">
+          <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                   "columnDefs": [{
+                      "targets": [0, 1, 4],
+                      "orderable": false
+                    }],
+                   "order": [],
+                   "info": {
+                     "totalQty": "#datatableWithPaginationInfoTotalQty"
+                   },
+                   "search": "#datatableSearch",
+                   "entries": "#datatableEntries",
+                   "pageLength": 8,
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatablePagination"
+                 }'>
+            <thead class="thead-light">
+              <tr>
+                
+                <th class="table-column-ps-0">Submitted By</th>
+                <th>Is Processed</th>
+                <th>View</th>
+                <th>Report</th>
+                
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr  *ngFor="let submission of submissions">
+               
+                <td class="table-column-ps-0">
+                  
+                   {{submission.userName}}
+                </td>
+                <td>
+                  {{submission.processed}}
+                </td>
+                <td><a href="#" (click)="viewDetails(submission.answerSetId)" >View</a></td>
+                <td><a href="#" (click)="gotoReport(submission.answerSetId,submission.userName,submission.firstName,submission.uniqueLink,submission.email)">Report</a></td>
+                
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <!-- End Table -->
+
+        <!-- Footer -->
+        <div class="card-footer">
+          <!-- Pagination -->
+          <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+            <div class="col-sm mb-2 mb-sm-0">
+              <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                <span class="me-2">Showing:&nbsp;{{submissions.length}}</span>
+
+                <!-- End Select -->
+
+                <span class="text-secondary me-2">of</span>
+
+                <!-- Pagination Quantity -->
+                <span id="datatableWithPaginationInfoTotalQty">{{submissions.length}}</span>
+              </div>
+            </div>
+            <!-- End Col -->
+
+            <div class="col-sm-auto">
+              <div class="d-flex justify-content-center justify-content-sm-end">
+                <!-- Pagination -->
+                <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+              </div>
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Pagination -->
+        </div>
+        <!-- End Footer -->
+      </div>
+      <!-- End Card -->
+
+            <!-- Card -->
+            <div class="card mb-3 mb-lg-5" [hidden]="hideQuestions">
+              <!-- Header -->
+              <div class="card-header">
+                <div class="row justify-content-between align-items-center flex-grow-1">
+                  <div class="col-md">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h4 class="card-header-title">Question Set Management</h4>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+      
+                  <div class="col-auto">
+                    <!-- Filter -->
+                    <div class="row align-items-sm-center">
+                      <div class="col-sm-auto">
+                        <div class="row align-items-center gx-0">
+                          
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Col -->
+      
+                      <!-- End Col -->
+                    </div>
+                    <!-- End Filter -->
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Row -->
+              </div>
+              <!-- End Header -->
+      
+              <!-- Table -->
+              <div class="table-responsive datatable-custom">
+                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                         "columnDefs": [{
+                            "targets": [0, 1, 4],
+                            "orderable": false
+                          }],
+                         "order": [],
+                         "info": {
+                           "totalQty": "#datatableWithPaginationInfoTotalQty"
+                         },
+                         "search": "#datatableSearch",
+                         "entries": "#datatableEntries",
+                         "pageLength": 8,
+                         "isResponsive": false,
+                         "isShowPaging": false,
+                         "pagination": "datatablePagination"
+                       }'>
+                  <thead class="thead-light">
+                    <tr>
+                      
+                      <th class="table-column-ps-0">Question Set</th>
+                      <th>Question</th>
+                      <th>Order</th>
+                      <th>Edit</th>
+                      
+                    </tr>
+                  </thead>
+      
+                  <tbody>
+                    <tr >
+                     
+                      <td class="table-column-ps-0">
+                        
+                        
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td></td>
+                      <td></td>
+                      
+                    </tr>
+      
+                  </tbody>
+                </table>
+              </div>
+              <!-- End Table -->
+      
+              <!-- Footer -->
+              <div class="card-footer">
+                <!-- Pagination -->
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                  <div class="col-sm mb-2 mb-sm-0">
+                    <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                      <span class="me-2">Showing:&nbsp;0</span>
+      
+                      <!-- End Select -->
+      
+                      <span class="text-secondary me-2">of</span>
+      
+                      <!-- Pagination Quantity -->
+                      <span id="datatableWithPaginationInfoTotalQty">0</span>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+      
+                  <div class="col-sm-auto">
+                    <div class="d-flex justify-content-center justify-content-sm-end">
+                      <!-- Pagination -->
+                      <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Pagination -->
+              </div>
+              <!-- End Footer -->
+            </div>
+            <!-- End Card -->
+
+      <!-- Card -->
+      <div class="card mb-3 mb-lg-5" [hidden]="hideReportTemplates">
+        <!-- Header -->
+        <div class="card-header">
+          <div class="row justify-content-between align-items-center flex-grow-1">
+            <div class="col-md">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-header-title">Report Templates</h4>
+              </div>
+            </div>
+            <!-- End Col -->
+
+            <div class="col-auto">
+              <!-- Filter -->
+              <div class="row align-items-sm-center">
+                <div class="col-sm-auto">
+                  <div class="row align-items-center gx-0">
+                    
+                  </div>
+                  <!-- End Row -->
+                </div>
+                <!-- End Col -->
+
+                <!-- End Col -->
+              </div>
+              <!-- End Filter -->
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+        </div>
+        <!-- End Header -->
+
+        <!-- Table -->
+        <div class="table-responsive datatable-custom">
+          <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                   "columnDefs": [{
+                      "targets": [0, 1, 4],
+                      "orderable": false
+                    }],
+                   "order": [],
+                   "info": {
+                     "totalQty": "#datatableWithPaginationInfoTotalQty"
+                   },
+                   "search": "#datatableSearch",
+                   "entries": "#datatableEntries",
+                   "pageLength": 8,
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatablePagination"
+                 }'>
+            <thead class="thead-light">
+              <tr>
+                
+                <th class="table-column-ps-0">Report Name</th>
+                <th>Visa</th>
+                <th>Edit</th>
+                <th>Copy</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+               
+                <td class="table-column-ps-0">
+                  
+                  Fee Paying Student Visa Report
+                </td>
+                <td>
+                  Fee Paying Student Visa
+                </td>
+                <td><a href="#" (click)="reportContentView()">Edit</a></td>
+                <td><a href="#">Copy</a></td>
+                <td><a href="#">Delete</a></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <!-- End Table -->
+
+        <!-- Footer -->
+        <div class="card-footer">
+          <!-- Pagination -->
+          <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+            <div class="col-sm mb-2 mb-sm-0">
+              <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                <span class="me-2">Showing:&nbsp;1</span>
+
+                <!-- End Select -->
+
+                <span class="text-secondary me-2">of</span>
+
+                <!-- Pagination Quantity -->
+                <span id="datatableWithPaginationInfoTotalQty">1</span>
+              </div>
+            </div>
+            <!-- End Col -->
+
+            <div class="col-sm-auto">
+              <div class="d-flex justify-content-center justify-content-sm-end">
+                <!-- Pagination -->
+                <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+              </div>
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Pagination -->
+        </div>
+        <!-- End Footer -->
+      </div>
+      <!-- End Card -->
+
+            <!-- Card -->
+            <div class="card mb-3 mb-lg-5" [hidden]="hideReportContent">
+              <!-- Header -->
+              <div class="card-header">
+                <div class="row justify-content-between align-items-center flex-grow-1">
+                  <div class="col-md">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h4 class="card-header-title">Edit Report Content</h4>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+      
+                  <div class="col-auto">
+                    <!-- Filter -->
+                    <div class="row align-items-sm-center">
+                      <div class="col-sm-auto">
+                        <div class="row align-items-center gx-0">
+                          
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Col -->
+      
+                      <!-- End Col -->
+                    </div>
+                    <!-- End Filter -->
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Row -->
+              </div>
+              <!-- End Header -->
+      
+              <!-- Table -->
+              <div class="table-responsive datatable-custom">
+                <div *ngIf="showReportPart || editReportPart"><a href="#" (click)="showReportPart = false; editReportPart = false;">Back</a></div>  
+                
+                <table id="datatable" *ngIf="!showReportPart && !editReportPart" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                         "columnDefs": [{
+                            "targets": [0, 1, 4],
+                            "orderable": false
+                          }],
+                         "order": [],
+                         "info": {
+                           "totalQty": "#datatableWithPaginationInfoTotalQty"
+                         },
+                         "search": "#datatableSearch",
+                         "entries": "#datatableEntries",
+                         "pageLength": 8,
+                         "isResponsive": false,
+                         "isShowPaging": false,
+                         "pagination": "datatablePagination"
+                       }'>
+                  <thead class="thead-light">
+                    <tr>
+                      
+                      <th class="table-column-ps-0">Content Section</th>
+                      <th>Conditional Logic</th>
+                      <th>True Action</th>
+                      <th>False Action</th>
+                      <th>Edit</th>
+                      <th>Report Content</th>
+                    </tr>
+                  </thead>
+      
+                  <tbody>
+                    <tr *ngFor="let reportContent of reportParts;let i = index">
+                     
+                     <td>
+                      Section&nbsp;{{i+1}}
+                     </td>
+                      <td>
+                        {{reportContent.conditionReportLogic}}
+                      </td>
+                      <td>{{reportContent.trueAction}}</td>
+                      <td>{{reportContent.falseAction}}</td>
+                      <td><a href="#" (click)="editHTMLContent(reportContent.sectionContent)">Edit</a></td>
+                      <td><a href="#" (click)="showHTMLContent(reportContent.sectionContent)">View</a></td>
+                      
+                    </tr>
+      
+                  </tbody>
+                </table>
+                <div *ngIf="showReportPart" [innerHtml]="displayReportPart | safeHtml">
+
+                </div>
+                <div *ngIf="editReportPart">
+                  <textarea style="min-width:100%;min-height:300px">{{displayReportPart}}</textarea>
+                </div>
+              </div>
+              <!-- End Table -->
+      
+              <!-- Footer -->
+              <div class="card-footer">
+                <!-- Pagination -->
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                  <div class="col-sm mb-2 mb-sm-0">
+                    <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                      <span class="me-2">Showing:&nbsp;1</span>
+      
+                      <!-- End Select -->
+      
+                      <span class="text-secondary me-2">of</span>
+      
+                      <!-- Pagination Quantity -->
+                      <span id="datatableWithPaginationInfoTotalQty">1</span>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+      
+                  <div class="col-sm-auto">
+                    <div class="d-flex justify-content-center justify-content-sm-end">
+                      <!-- Pagination -->
+                      <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Pagination -->
+              </div>
+              <!-- End Footer -->
+            </div>
+            <!-- End Card -->
+    </div>
+    <!-- End Content -->
+
+ 
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+
+<section class="page-section portfolio" id="portfolio" [hidden]="reportAnswerId>0 || hideReportData">
+  <div class="container">
+
     <div class="row" *ngFor="let detail of submissiondetails" >
         <div class="row" [hidden]="detail.answerSetId!=currentAnswerId" style="padding-bottom:10px">
           <div class="row">
@@ -29,6 +563,6 @@
   </div>
 
 </section>
-<div *ngIf="reportAnswerId>0">
+<div *ngIf="reportAnswerId>0 && !hideReportData">
   <app-report [answerSetId]="reportAnswerId" [userName]="userName" [firstName]="firstName" [uniqueLink]="uniqueLink" [email]="email"></app-report>
 </div>  

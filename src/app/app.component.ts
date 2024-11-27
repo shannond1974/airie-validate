@@ -21,8 +21,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.userName=='airie';
-    const queryParams = this.route.snapshot.queryParams;
-    console.log(queryParams);
+    
   }
 
   moveStageCustom(moveTo:number){

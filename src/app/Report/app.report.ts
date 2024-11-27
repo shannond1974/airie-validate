@@ -1,9 +1,9 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule  } from '@angular/common';
 import { ApiService } from '../rest/api.service';
 import { ChangeDetectorRef, Component, OnInit, Input,Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-report',
@@ -20,25 +20,28 @@ export class Report implements OnInit {
   public proceedButtonText:string="Apply Fields";
   public customerAge:number=0;
   public customerCitizenship:string='';
+  public activeReportPart:string='';
+  public originalReportPart:string='';
 
   public answersLoaded:boolean=false;
   public reportLoaded:boolean=false;
   public informationLoaded:boolean=false;
+  public published:boolean=false;
 
   public reportParts:string[]=[];
-
+  public completeReport:string='';
+  public reportPartEdits:boolean[]=[];
   
   public answers:AnswerList[]=[];
   public infoContent:informationContent[]=[];
   public conditionalLogic:ConditionalLogic[]=[];
 
-  
   public emailSent:string='';
-  public emailToSend:string='shannond1974@gmail.com';
-  public emailToSend2:string='garrik.perry@gmail.com';
+  public emailToSend:string='';
+
 public merged:boolean=false;
 
-  constructor(private http: HttpClient,private apiService: ApiService){
+  constructor(private http: HttpClient,private apiService: ApiService,private elementRef: ElementRef){
     this.answers=[];
     
   }
@@ -54,6 +57,8 @@ public merged:boolean=false;
         this.apiService.getReportContent(reportId).subscribe(data => {
             for(let i=0;i<data.length;i++){
               this.reportParts.push(data[i].sectionContent);
+              this.completeReport+=data[i].sectionContent;
+              this.reportPartEdits.push(false);
             }
             
           })
@@ -93,56 +98,88 @@ public merged:boolean=false;
          
     }
 
+    editContent(index:number){
+      this.activeReportPart=this.reportParts[index];
+      this.originalReportPart=this.activeReportPart;
+      if(this.reportPartEdits[index]){
+        this.reportPartEdits[index]=false;
+      }
+      else{
+        this.reportPartEdits[index]=true;
+      }
+    
+    }
+    cancelContent(index:number){
+      this.activeReportPart=this.originalReportPart;
+      this.reportParts[index]=this.activeReportPart;
+      this.reportPartEdits[index]=false;
+    
+    }
+    saveContent(index:number,save:boolean){
+      this.reportParts[index]=this.activeReportPart;
+      
+      //this.reportParts[index]=String(document.getElementById('edit'+ String(index)));
+      if(save){
+        this.reportPartEdits[index]=false;
+        this.activeReportPart='';
+        this.originalReportPart=''; 
+      }
+    
+    }
+
     emailLink(){
       this.emailToSend=this.email;
       const options = {
         'responseType': 'text'
       }
-    
-      let emailRequest: any = { email:this.emailToSend, internal:false,AnswerSetId:String(this.answerSetId),UniqueLink:this.uniqueLink,options };
-      this.apiService.sendEmail(emailRequest).subscribe(data => {
-        this.emailSent='Email sent ok';
-       }) 
+      const divElement = this.elementRef.nativeElement.querySelector('#myDiv');
+      this.completeReport=divElement.innerHTML;
+      this.apiService.publishReport(this.answerSetId, this.completeReport).subscribe(data => {
+        let emailRequest: any = { email:this.emailToSend, internal:false,AnswerSetId:String(this.answerSetId),UniqueLink:this.uniqueLink,options };
+        this.apiService.sendEmail(emailRequest).subscribe(data => {
+          this.emailSent='Email sent ok';
+        }) 
   
+      })
+      
     }
 
-    emailLink2(){
-      const options = {
-        'responseType': 'text'
-      }
-    
-      let emailRequest: any = { email:this.emailToSend2, internal:false,AnswerSetId:String(this.answerSetId),UniqueLink:this.uniqueLink,options };
-      this.apiService.sendEmail(emailRequest).subscribe(data => {
-        this.emailSent='Email sent ok';
-       }) 
-  
+    publishReport(){
+      this.published=true;
+      this.completeReport='';
+      //const divElement = this.elementRef.nativeElement.querySelector('#myDiv');
+      //this.completeReport=divElement.innerHTML;
+      //this.apiService.publishReport(this.answerSetId, this.completeReport).subscribe(data => {console.log('rumbled');});
     }
+
 
     
 
     moveStage(isUp:boolean){
-      console.log(this.reportParts.length);
+      this.completeReport='';
       for(let i=0;i<this.reportParts.length;i++){
         this.reportParts[i]=this.reportParts[i].replace('[[CustomerName]]',this.firstName);
+        
         this.reportParts[i]=this.reportParts[i].replace('[[PreparedFor]]',this.userName);
-        this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()));
+        this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()).substring(0,16));
         this.reportParts[i]=this.reportParts[i].replace('[[Citizenship]]',this.customerCitizenship);
         this.reportParts[i]=this.reportParts[i].replace('[[PreparedFor]]',this.userName);
-        this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()));
+        this.reportParts[i]=this.reportParts[i].replace('[[DatePrepared]]',String(new Date()).substring(0,16));
         this.reportParts[i]=this.reportParts[i].replace('[[VisaType]]','Fee Paying Student Visa');
-        if(this.answers.length>0){
-          for(let a=0;a<this.answers.length;a++){
-            this.reportParts[i]=this.reportParts[i].replace(this.answers[a].mergeField,this.answers[a].answerText);
-          }
-        }
+        
         if(this.infoContent.length>0){
           console.log(this.infoContent);
           for(let c=0;c<this.infoContent.length;c++){
-            console.log(this.infoContent[c].mergeField);
+            
             if(this.infoContent[c].mergeField=='[[Insurance]]'){
               console.log(this.infoContent[c].informationContent);
             }
             this.reportParts[i]=this.reportParts[i].replace(this.infoContent[c].mergeField,this.infoContent[c].informationContent);
+          }
+        }
+        if(this.answers.length>0){
+          for(let a=0;a<this.answers.length;a++){
+            this.reportParts[i]=this.reportParts[i].replace(this.answers[a].mergeField,this.answers[a].answerText);
           }
         }
         if(this.conditionalLogic.length>0){
@@ -152,7 +189,12 @@ public merged:boolean=false;
               if(this.evaluateCondtionAge(this.conditionalLogic[c].conditionalReportLogic,this.customerAge)=='true'){
                 this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,this.conditionalLogic[c].informationContent);                
               }else{
-                this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,'');
+                if(this.conditionalLogic[c].falseAction=='displayalternate'){
+                  this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,this.conditionalLogic[c].alternateInformationContent);
+                }else{
+                  // hide by default
+                  this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,'');
+                }
               }
             }
           
@@ -167,8 +209,13 @@ public merged:boolean=false;
                     this.conditionalLogic[c].mergeField;
                     this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,this.conditionalLogic[c].informationContent);                
                   }else{
+                    if(this.conditionalLogic[c].falseAction=='displayalternate'){
+                      this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,this.conditionalLogic[c].alternateInformationContent);
+                    }else{
+                      // hide by default
+                      this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,'');
+                    }
                     
-                    this.reportParts[i]=this.reportParts[i].replace(this.conditionalLogic[c].mergeField,'');
                   }
                 }
                   
@@ -176,6 +223,8 @@ public merged:boolean=false;
             }
           }
         }
+        this.reportParts[i]=this.reportParts[i].replace('[','');
+        this.completeReport+=this.reportParts[i];
       }
       
       this.merged=true;
@@ -223,7 +272,7 @@ public merged:boolean=false;
         // checking for age
         let ageCheck:number=0;
         if (logic.includes('<')){
-            // check if it's grater than the age
+            // check if it's greater than the age
             ageCheck=Number(logic.split('<')[1]);
             if(age<ageCheck){
               result='true';
@@ -232,7 +281,13 @@ public merged:boolean=false;
             }
         }else
         {
-
+            // check if it's less than the age
+            ageCheck=Number(logic.split('>')[1]);
+            if(age>ageCheck){
+              result='true';
+            }else{  
+              result='false';
+            }
         }
       }
       return result;
@@ -277,6 +332,7 @@ interface AnswerList {
     falseAction:string;
     sectionContent:string;
     informationContent:string;
+    alternateInformationContent:string;
     conditionalReportLogic:string;
     questionId:number;
     questionText:string;
