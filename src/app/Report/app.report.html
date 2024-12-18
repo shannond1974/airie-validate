@@ -4,15 +4,8 @@
       <div class="col-2"></div>
       <div class="col-2"><button class="btn btn-info"  (click)="moveStage(true)">{{proceedButtonText}}</button></div>
       <div class="col-6">
-        
           <button [hidden]="!merged"  class="btn btn-info"  (click)="publishReport()">Publish Report</button>&nbsp;
-        
-        
           <button [hidden]="!published" class="btn btn-info"  (click)="emailLink()">Email Customer</button>
-          
-        
-        
-        <!--<textarea>{{completeReport}}</textarea>-->
       </div>
       <div class="col-2">{{emailSent}}</div>
     </div>
@@ -25,7 +18,9 @@
             <div *ngIf="!published">
             <div class="row" [hidden]="!reportPartEdits[i]">
               <div class="col-4">
-              <textarea style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></textarea></div>
+                <!--<quill-editor style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></quill-editor>-->
+                <textarea style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></textarea>
+              </div>
               <div class="col-8" [innerHtml]="reportParts[i] | safeHtml"></div>
             </div>
             <div class="row mx-auto d-block" style="padding-top:10px;padding-bottom:10px" *ngIf="!reportPartEdits[i]">

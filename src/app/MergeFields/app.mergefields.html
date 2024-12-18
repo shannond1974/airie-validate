@@ -1,0 +1,70 @@
+<div class="card col-md-8">
+    <div *ngIf="conditionalLogicMatch!=null">
+        <div class="row" style="padding-bottom:5px">
+            <p class="lead">Conditional Logic Field (level 3)</p>
+        </div>
+        <div class="row" style="padding-bottom:5px">
+            <div class="col-md-2">
+                {{conditionalLogicMatch.mergeField}}
+            </div>
+            <div class="col-md-3">
+                {{conditionalLogicMatch.conditionReportLogic}}
+            </div>
+            <div class="col-md-3">
+                True action:&nbsp;{{conditionalLogicMatch.trueAction}}
+            </div>
+            <div class="col-md-4">
+                False action:&nbsp;{{conditionalLogicMatch.falseAction}}
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:5px">
+            <div class="col-md-3">
+                True Content:
+            </div>
+            <div class="card col-md-9" [innerHtml]="conditionalLogicMatch.informationContent | safeHtml">
+
+            </div>
+        </div>
+        <div class="row" *ngIf="conditionalLogicMatch.falseContent!='hide'" style="padding-bottom:5px">
+            <div class="col-md-3">
+                False Content:
+            </div>
+            <div class="card col-md-7" [innerHtml]="conditionalLogicMatch.alternateInformationContent | safeHtml">
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dynamicContentMatch!=null">
+        <div class="row" style="padding-bottom:5px">
+            <p class="lead">Dynamic Content Field (level 2)</p>
+        </div>
+        <div class="row" style="padding-bottom:5px">
+            <div class="col-md-3">
+                {{dynamicContentMatch.mergeField}}
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:5px">
+            <div class="col-md-2">Content:</div>
+            <div class="card col-md-11" [innerHtml]="dynamicContentMatch.informationContent | safeHtml">
+
+            </div>
+        </div>
+    </div>
+    <div *ngIf="questionMergeMatch!=null">
+        <div class="row" style="padding-bottom:5px">
+            <p class="lead">Question Mapping Field (level 1)</p>
+        </div>
+        <div class="row" style="padding-bottom:5px">
+            <div class="col-md-3">
+                {{questionMergeMatch.mergeField}}
+            </div>
+            <div class="col-md-2">
+                Question:
+            </div>
+            <div class="col-md-7">
+                {{questionMergeMatch.questionText}}
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom:15px">
+</div>

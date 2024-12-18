@@ -1,0 +1,253 @@
+        <!-- Header -->
+  <div *ngIf="!fullRefresh">
+        <!--<div class="row" style="z-index: 1000;display: block;background-color: black;color: white;">Hello</div>-->
+
+         <div [hidden]="!hideReportContent">
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center flex-grow-1">
+              <div class="col-md">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="card-header-title">Report Templates</h4>
+                </div>
+              </div>
+              <!-- End Col -->
+  
+              <div class="col-auto">
+                <!-- Filter -->
+                <div class="row align-items-sm-center">
+                  <div class="col-sm-auto">
+                    <div class="row align-items-center gx-0"></div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Row -->
+          </div>
+          <!-- End Header -->
+  
+          <!-- Table -->
+          <div class="table-responsive datatable-custom">
+            <div class="modal" style="display:block;top:100px;border-style: groove;" [hidden]="hideNewReportTitle" >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Copy Report</h5>
+                    
+                  </div>
+                  <div class="modal-body">
+                    This will create a full copy of the report in a draft format - including all conditional and dynamic logic.
+                    <br/>
+                    <input class="form-control" [(ngModel)]="newReportName" type="text" name="newReportName"/>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-small" (click)="cancelReportCopy()">Close</button>
+                    <button type="button" class="btn btn-info btn-small" (click)="applyReportCopy()">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal" style="display:block;top:100px;border-style: groove;" [hidden]="hideStatusChange" >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Status Change</h5>
+                    
+                  </div>
+                  <div class="modal-body">
+                    Note - there must be one "active" report so changing a status of one report may change the status of another report.
+                    If there already is an active report it will by default be set to draft.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-white btn-small" (click)="cancelStatusUpdate()">Close</button>
+                    <button type="button" class="btn btn-info btn-small" (click)="applyStatusUpdate()">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" >
+              <thead class="thead-light">
+                <tr>
+                  
+                  <th class="table-column-ps-0">Report Name</th>
+                  <th>Visa</th>
+                  <th>Edit</th>
+                  <th>Copy</th>
+                  <th>Active</th>
+                  <th>Draft</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <tr *ngFor="let report of reportList">
+                 
+                  <td class="table-column-ps-0">
+                    
+                    {{report.reportName}}
+                  </td>
+                  <td>
+                    Fee Paying Student Visa
+                  </td>
+                  <td><a href="#" (click)="reportContentView(report.reportId)">Edit</a></td>
+                  <td><a href="#" (click)="showReportCopy(report.reportId,report.reportName + ' (new)')">Copy</a></td>
+                  <td><span *ngIf="report.active"><strong>Active</strong></span></td>
+                  <td><a *ngIf="report.draft" (click)="updateStatus(report.reportId)" href="#">Set Active</a></td>
+                </tr>
+  
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- End Table -->
+  
+          <!-- Footer -->
+          <div class="card-footer">
+            <!-- Pagination -->
+            <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+              <div class="col-sm mb-2 mb-sm-0">
+                <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                  <span class="me-2">Showing:&nbsp;{{reportList.length}}</span>
+  
+                  <!-- End Select -->
+  
+                  <span class="text-secondary me-2">of</span>
+  
+                  <!-- Pagination Quantity -->
+                  <span id="datatableWithPaginationInfoTotalQty">{{reportList.length}}</span>
+                </div>
+              </div>
+              <!-- End Col -->
+  
+              <div class="col-sm-auto">
+                <div class="d-flex justify-content-center justify-content-sm-end">
+                  <!-- Pagination -->
+                  <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                </div>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+        
+          <!-- End Footer -->
+           <!-- Card -->
+           <div  [hidden]="hideReportContent">
+            <!-- Header -->
+            <div class="card-header">
+              <div class="row justify-content-between align-items-center flex-grow-1">
+                <div class="col-md">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-header-title">Edit Report Content</h4>
+                  </div>
+                </div>
+                
+                <div class="col-auto">
+                  <!-- Filter -->
+                  <div class="row align-items-sm-center">
+                    <div class="col-sm-auto">
+                      <div class="row align-items-center gx-0">    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Header -->
+    
+            <!-- Table -->
+            <div class="table-responsive datatable-custom">
+              <div *ngIf="showReportPart || editReportPart"><a href="#" (click)="showReportPart = false; editReportPart = false;">Back</a></div>  
+              <div class="row justify-content-between align-items-center flex-grow-1">
+                <div class="col-md-4">
+                  
+                    <table id="datatable" *ngIf="!showReportPart && !editReportPart" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" style="position: absolute;max-width:120px;top: 0px;">
+                      <thead class="thead-light">
+                        <tr>
+                          
+                          <th class="table-column-ps-0" style="padding-left: 15px;">&nbsp;&nbsp;Section</th>
+                          <th>View</th>
+                          <th>Move</th>
+                          
+                        </tr>
+                      </thead>
+          
+                      <tbody>
+                        <tr *ngFor="let reportContent of reportGroupings;let i = index">
+                          <td>
+                            {{reportContent.sectionHeader}}
+                          </td>                  
+                        <td><a href="#" (click)="showHTMLContent(reportContent.sectionHeader)">View</a></td>
+                          <td style="cursor: pointer;">
+                            <i class="bi-chevron-up ms-2"></i>
+                            <i class="bi-chevron-down ms-2"></i>
+                          </td>
+
+                        </tr>
+          
+                      </tbody>
+                    </table>
+                </div>
+                
+                <div class="col-md-8">
+                  
+                  <div *ngFor="let reportContent of displayReportPart;let i = index"  [hidden]="editReportPart && i!=activeIndex">
+                    <div [hidden]="activeMergeField.length>0" [innerHtml]="reportContent | safeHtml">
+                    </div>
+                    <div *ngIf="editReportPart && i==activeIndex">
+                      <!--<quill-editor style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></quill-editor>-->
+                      <textarea [hidden]="activeMergeField.length>0" style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart"  id="edit{{i}}"></textarea>
+                      <app-mergefields *ngIf="activeMergeField.length>0" [questionMerge]="questionMerge" [dynamicContent]="dynamicContent" [mergeFields]="mergeFields" [conditionalContent]="conditionalContent" [activeMergeField]="activeMergeField"></app-mergefields>
+                    </div>
+
+                    <div class="card row" [hidden]="!editReportPart || i!=activeIndex" >
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                      <table>
+                        <th>
+                          <strong>Merge Fields</strong>
+                        </th>
+                        <th></th>         
+                       
+                        <th>
+                          
+                        </th>
+                        <tr *ngFor="let field of sectionFields">
+                          <td><a href='#'>{{field}}</a></td>
+                          <td><a href='#' style="color:red">Remove</a></td>
+                          <td><a href='#' (click)="viewMergeField(field)">View Logic</a></td>
+                        </tr>
+                      </table>
+                     </div>
+                      <div class="row" [hidden]="!editReportPart || i!=activeIndex" style="padding-bottom: 15px;">
+
+                      </div>
+                    </div>
+                    <div class="row" [hidden]="editReportPart && i==activeIndex">
+                      <div class="col-md-5"></div>
+                      <div class="col-md-2">
+                        <button class="btn btn-small btn-info" (click)="editHTMLContent(reportContent,i)">Edit Content</button></div>
+                      <div class="col-md-5"></div>
+                    </div>
+                    <div class="row" [hidden]="!editReportPart || i!=activeIndex">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                        <button class="btn btn-small btn-info" (click)="editHTMLContent(reportContent,i)">Cancel</button>&nbsp;
+                        <button class="btn btn-small btn-info" (click)="editHTMLContent(reportContent,i)">Test</button>&nbsp;
+                        <button class="btn btn-small btn-info" (click)="editHTMLContent(reportContent,i)">Save</button>
+                        
+                      </div>
+                      <div class="col-md-2"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              
+            </div>
+            <!-- End Table -->
+    
+            <!-- End Footer -->
+          </div>
+          <!-- End Card -->
+        </div>

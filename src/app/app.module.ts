@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { Landing } from './UIComponents/app.landing';
 import {StatementOfIntent} from './Letters/app.stateintent';
 import {Report} from './Report/app.report';
+import {Template} from './ReportTemplate/app.template';
+import {MergeFields} from './MergeFields/app.mergefields';
 import { SafeHtmlPipe } from './safeHTMLPipe';
 import {QuillModule} from 'ngx-quill';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +20,8 @@ import {QuillModule} from 'ngx-quill';
     StatementOfIntent,
     Landing,
     Report,
+    MergeFields,
+    Template,
     SafeHtmlPipe
   ],
   imports: [

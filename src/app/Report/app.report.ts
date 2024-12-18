@@ -16,6 +16,7 @@ export class Report implements OnInit {
   @Input() firstName: string = '';
   @Input() uniqueLink: string='';
   @Input() email:string='';
+  @Input() reportNumber=0;
   public uiStage:number=0;
   public proceedButtonText:string="Apply Fields";
   public customerAge:number=0;
@@ -51,7 +52,7 @@ public merged:boolean=false;
             'responseType': 'text'
           }
         
-        let reportId:number=2;
+        let reportId:number=this.reportNumber;
 
         // get the report sections
         this.apiService.getReportContent(reportId).subscribe(data => {

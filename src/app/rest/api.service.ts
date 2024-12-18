@@ -21,6 +21,15 @@ export class ApiService {
     return this.httpClient.post<any>(this.baseURL + 'Airie/GetReportContent', reportRequest0);;
 
   }
+
+  public getActiveReportContent(){
+    const options = {
+      'responseType': 'text'
+    }
+    // need to add is visa type filter in the future
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetActiveReportContent', options);;
+
+  }
   
   public getConditionalLogic(reportId:number){
     const options = {
@@ -29,6 +38,80 @@ export class ApiService {
     let reportRequest0: any = { ReportId:String(reportId) ,options };
 
     return this.httpClient.post<any>(this.baseURL + 'Airie/GetConditionalContent', reportRequest0);;
+
+  }
+
+  public getMergeFields(reportId:number){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId) ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetMergeFields', reportRequest0);;
+
+  }
+
+  public getConditionalContent(reportId:number){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId) ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetConditionalContent', reportRequest0);;
+
+  }
+
+  public getQuestionMerge(reportId:number){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId) ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetMergeFields', reportRequest0);;
+
+  }
+
+  public copyReport(reportId:number, newReportName:string){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId), newReportName:newReportName ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/CopyReport', reportRequest0);
+  }
+
+  public applyStatusUpdate(reportId:number){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId) ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/ApplyStatusUpdate', reportRequest0);
+  }
+
+  public getReports(){
+    const options = {
+      'responseType': 'text'
+    }
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetReports', options);
+  }
+
+  public getDynamicContent(reportId:number){
+    const options = {
+      'responseType': 'text'
+    }
+    let reportRequest0: any = { ReportId:String(reportId) ,options };
+
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetInformationContent', reportRequest0);;
+
+  }
+
+  public getDistinctMergeFields(){
+    const options = {
+      'responseType': 'text'
+    }
+    // gets a list of all the distinct merge fields
+    return this.httpClient.post<any>(this.baseURL + 'Airie/GetDistinctMergeFields',options);;
 
   }
 
