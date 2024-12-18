@@ -18,8 +18,8 @@
             <div *ngIf="!published">
             <div class="row" [hidden]="!reportPartEdits[i]">
               <div class="col-4">
-                <!--<quill-editor style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></quill-editor>-->
-                <textarea style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></textarea>
+                <quill-editor style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></quill-editor>
+                <!--<textarea style="min-width: 100%;min-height:200px;font-size:small" [(ngModel)]="activeReportPart" id="edit{{i}}"></textarea>-->
               </div>
               <div class="col-8" [innerHtml]="reportParts[i] | safeHtml"></div>
             </div>

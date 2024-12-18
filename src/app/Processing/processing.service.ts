@@ -12,6 +12,7 @@ export class ProcessingService {
 
     for(let i=0;i<conditionalLogic.length;i++){
       if(conditionalLogic[i].mergeField==mergeField){
+        console.log(conditionalLogic[i]);
         return conditionalLogic[i];
       }
     }

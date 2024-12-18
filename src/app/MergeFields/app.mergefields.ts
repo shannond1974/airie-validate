@@ -28,7 +28,7 @@ export class MergeFields implements OnInit {
     }
       
     ngOnInit() {
-        console.log(this.dynamicContent);
+        console.log(this.conditionalContent);
         console.log(this.questionMerge);
         console.log(this.activeMergeField);
         // first see if the active merge field has conditional logic (level 3)
